@@ -81,7 +81,7 @@ const BarcodeValueInput = () => {
         inputProps={{
           maxLength: currentMaxLength,
           placeholder: barcodeFormats[currentFormat]?.placeholder || "",
-          multiline: isMultilineInput || isCodeView,
+          multiline: isMultilineInput.toString() || isCodeView.toString(),
         }}
         InputProps={{
           endAdornment: (

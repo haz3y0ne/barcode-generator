@@ -14,6 +14,7 @@ import {
 import {
   SaveAlt as ExportOutlined,
   Delete as DeleteOutlined,
+  DownloadingOutlined,
 } from "@mui/icons-material";
 import QRCode from "qrcode.react";
 import JsBarcode from "jsbarcode";
@@ -39,7 +40,6 @@ const Container = styled.div`
   width: 100%;
   max-width: 50vw;
 
-  
   @media (max-width: 1024px) {
     max-width: 100%;
   }
@@ -106,6 +106,7 @@ const BarcodeOutputList = () => {
     currentConfig;
 
   const [sizes, setSizes] = useState(documentSizes);
+  const [isDownloading, setIsDownloading] = useState(true);
 
   useEffect(() => {
     if (documentOrientation === "portrait") {
@@ -121,11 +122,16 @@ const BarcodeOutputList = () => {
   }, [documentOrientation]);
 
   const handleOrientationToggle = () => {
-    const newOrientation = documentOrientation === "portrait" ? "landscape" : "portrait";
+    const newOrientation =
+      documentOrientation === "portrait" ? "landscape" : "portrait";
     updateConfig({
       target: { name: "documentOrientation", value: newOrientation },
     });
   };
+
+  const handleExportButton = (e) => {
+    
+  }
 
   return (
     <Container>
@@ -169,7 +175,9 @@ const BarcodeOutputList = () => {
         </FlexRow>
         <FlexRow>
           <Button
-            startIcon={<ExportOutlined />}
+            startIcon={
+              isDownloading ? <DownloadingOutlined /> : <ExportOutlined />
+            }
             onClick={() => exportToDocument(barcodeStack, documentSize)}
             sx={{ minWidth: "30%" }}
             variant="outlined"

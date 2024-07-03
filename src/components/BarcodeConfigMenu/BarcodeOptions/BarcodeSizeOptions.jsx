@@ -1,62 +1,49 @@
 import { useContext } from "react";
-import { TextField, FormControl, FormHelperText } from "@mui/material";
-import { handleOptionChange } from "../../../handlers/handleOptionChange";
+import { IconButton } from "@mui/material";
+import {
+  Visibility as VisibilityOutlined,
+  VisibilityOff as VisibilityOffOutlined,
+} from "@mui/icons-material";
 import { ConfigContext } from "../../../context/ConfigContext";
-import styled from "@emotion/styled";
+import { handleOptionChange } from "../../../handlers/handleOptionChange";
 
-const FlexRow = styled.div`
-  display: flex;
-  gap: 8px;
-  align-items: center;
-`;
-
-const BarcodeSizeOptions = () => {
+const BarcodeDisplayOptions = () => {
   const { currentConfig, updateConfig } = useContext(ConfigContext);
   const { barcodeOptions, barcodeFormats } = currentConfig;
 
-  return (
-    <FlexRow style={{ width: "50%"}}>
-      <FormControl>
-        <TextField
-          type="number"
-          variant="outlined"
-          label="Width"
-          name="barcodeOptions.width"
-          value={barcodeOptions.width}
-          onChange={(event) =>
-            handleOptionChange(
-              event,
-              barcodeFormats,
-              currentConfig,
-              updateConfig
-            )
-          }
-          inputProps={{ min: 1 }}
+  const handleClick = (event) => {
+    console.log(event);
+    event.stopPropagation();
+    handleOptionChange(
+      {
+        target: {
+          name: "barcodeOptions.displayValue",
+          type: "checkbox",
+          checked: !barcodeOptions.displayValue,
+        },
+      },
+      barcodeFormats,
+      currentConfig,
+      updateConfig
+    );
+  };
 
-        />
-        <FormHelperText>Default: 2px</FormHelperText>
-      </FormControl>
-      <FormControl>
-        <TextField
-          type="number"
-          variant="outlined"
-          label="Height"
-          name="barcodeOptions.height"
-          value={barcodeOptions.height}
-          onChange={(event) =>
-            handleOptionChange(
-              event,
-              barcodeFormats,
-              currentConfig,
-              updateConfig
-            )
-          }
-          inputProps={{ min: 10 }}
-        />
-        <FormHelperText>Default: 100px</FormHelperText>
-      </FormControl>
-    </FlexRow>
+  return (
+    <IconButton
+      name="barcodeOptions.displayValue"
+      component="button"
+      title={barcodeOptions.displayValue ? "Hide Value" : "Show Value"}
+      onClick={handleClick}
+    >
+      <div onClick={(event) => event.stopPropagation()}>
+        {barcodeOptions.displayValue ? (
+          <VisibilityOutlined />
+        ) : (
+          <VisibilityOffOutlined />
+        )}
+      </div>
+    </IconButton>
   );
 };
 
-export default BarcodeSizeOptions;
+export default BarcodeDisplayOptions;

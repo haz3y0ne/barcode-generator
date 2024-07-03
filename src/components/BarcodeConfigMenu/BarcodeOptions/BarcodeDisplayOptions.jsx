@@ -14,16 +14,19 @@ const BarcodeDisplayOptions = () => {
   return (
     <IconButton
       name="barcodeOptions.displayValue"
+      component="button"
+      title={barcodeOptions.displayValue ? "Hide Value" : "Show Value"}
       onClick={(event) =>
         handleOptionChange(event, barcodeFormats, currentConfig, updateConfig)
       }
-      title={barcodeOptions.displayValue ? "Hide Value" : "Show Value"}
     >
-      {barcodeOptions.displayValue ? (
-        <VisibilityOutlined />
-      ) : (
-        <VisibilityOffOutlined />
-      )}
+      <span>
+        {barcodeOptions.displayValue ? (
+          <VisibilityOutlined name="barcodeOptions.displayValue"/>
+        ) : (
+          <VisibilityOffOutlined name="barcodeOptions.displayValue" />
+        )}
+      </span>
     </IconButton>
   );
 };

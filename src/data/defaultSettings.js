@@ -10,7 +10,7 @@ export const defaultBarcodeOptions = {
   width: 2,
   height: 100,
   displayValue: true,
-  fontOptions: [],
+  fontOptions: "",
   textAlign: "center",
   textPosition: "bottom",
   textMargin: 2,

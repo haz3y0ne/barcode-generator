@@ -32,22 +32,31 @@ export const ConfigProvider = ({ children }) => {
 
   const updateConfig = ({ name, value }) => {
     const path = name.split(".");
-
     setCurrentConfig((prevConfig) => {
-      let updatedConfig = { ...prevConfig };
+      const updatedConfig = { ...prevConfig };
 
       if (path.length === 1) {
-        updatedConfig[path[0]] = value;
-      } else {
-        let currentLevel = updatedConfig;
-        for (let i = 0; i < path.length - 1; i++) {
-          if (!currentLevel[path[i]]) currentLevel[path[i]] = {};
-          currentLevel = currentLevel[path[i]];
+        updatedConfig[path[0]] = typeof value === "boolean" ? !prevConfig[path[0]] : value;
+      } else if (path.length === 2) {
+        switch (path[0]) {
+          case "barcodeOptions":
+            updatedConfig.barcodeOptions = {
+              ...prevConfig.barcodeOptions,
+              [path[1]]: value,
+            };
+            break;
+          case "documentSize":
+            updatedConfig.documentSize = {
+              ...prevConfig.documentSize,
+              [path[1]]: value,
+            };
+            break;
+          default:
+            break;
         }
-        currentLevel[path[path.length - 1]] = value;
       }
 
-      if (name === "barcodeValue" || name === "barcodeOptions") {
+      if (path[0] === "barcodeValue" || path[0] === "barcodeOptions") {
         updatedConfig.jsonOutput = JSON.stringify({
           barcodeValue: updatedConfig.barcodeValue,
           barcodeOptions: updatedConfig.barcodeOptions,
@@ -68,3 +77,4 @@ export const ConfigProvider = ({ children }) => {
 ConfigProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
