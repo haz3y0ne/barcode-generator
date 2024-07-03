@@ -38,6 +38,11 @@ const Container = styled.div`
   gap: 5px;
   width: 100%;
   max-width: 50vw;
+
+  
+  @media (max-width: 1024px) {
+    max-width: 100%;
+  }
 `;
 
 const ExportContainer = styled.div`

@@ -8,7 +8,6 @@ const FlexRow = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
-  margin-bottom: 16px;
 `;
 
 const BarcodeSizeOptions = () => {
@@ -16,8 +15,8 @@ const BarcodeSizeOptions = () => {
   const { barcodeOptions, barcodeFormats } = currentConfig;
 
   return (
-    <FlexRow>
-      <FormControl fullWidth>
+    <FlexRow style={{ width: "50%"}}>
+      <FormControl>
         <TextField
           type="number"
           variant="outlined"
@@ -33,11 +32,11 @@ const BarcodeSizeOptions = () => {
             )
           }
           inputProps={{ min: 1 }}
-          fullWidth
+
         />
         <FormHelperText>Default: 2px</FormHelperText>
       </FormControl>
-      <FormControl fullWidth>
+      <FormControl>
         <TextField
           type="number"
           variant="outlined"
@@ -53,7 +52,6 @@ const BarcodeSizeOptions = () => {
             )
           }
           inputProps={{ min: 10 }}
-          fullWidth
         />
         <FormHelperText>Default: 100px</FormHelperText>
       </FormControl>

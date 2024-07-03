@@ -1,6 +1,10 @@
 // Default barcode options
 export const defaultBarcodeValue = "CODE39EXAMPLE";
 
+export const defaultIsMultiline = false;
+
+export const defaultIsCodeView = false;
+
 export const defaultBarcodeOptions = {
   format: "CODE39",
   width: 2,

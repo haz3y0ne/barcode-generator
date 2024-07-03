@@ -8,7 +8,6 @@ const FlexRow = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
-  margin-bottom: 16px;
 `;
 
 const BarcodeColorOptions = () => {
@@ -16,7 +15,7 @@ const BarcodeColorOptions = () => {
   const { barcodeOptions, barcodeFormats } = currentConfig;
 
   return (
-    <FlexRow>
+    <FlexRow style={{width: "50%"}}>
       <FormControl fullWidth>
         <TextField
           type="color"
@@ -51,7 +50,7 @@ const BarcodeColorOptions = () => {
               updateConfig
             )
           }
-          fullWidth
+          
         />
         <FormHelperText>Default: Black</FormHelperText>
       </FormControl>

@@ -3,13 +3,16 @@ import { IconButton } from "@mui/material";
 import {
   Delete as DeleteOutlined,
   SaveAlt as ExportOutlined,
+  Download as ExportSettingsOutlined,
+  Upload as ImportSettingsOutlined,
 } from "@mui/icons-material";
 import { FaBarcode } from "react-icons/fa";
 import { clearBarcodeStack } from "../../functions/clearBarcodeStack";
 import { exportSingleBarcode } from "../../functions/exportSingleBarcode";
 import { useTheme } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ConfigContext } from "../../context/ConfigContext";
+import ConfirmationModal from "../common/ConfirmationModal";
 
 const FlexRow = styled.div`
   display: flex;
@@ -29,50 +32,71 @@ const BarcodeHeader = () => {
   const theme = useTheme();
   const { currentConfig, updateConfig } = useContext(ConfigContext);
   const { barcodeValue, barcodeOptions, outputFormat } = currentConfig;
-  
-  
-  const handleClearBarcodeStack = () => {
-    clearBarcodeStack(() =>
-      updateConfig({ target: { name: "barcodeStack", value: [] } })
-    );
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClearStack = () => {
+    updateConfig({ name: "barcodeStack", value: [] });
+    setShowModal(false);
   };
 
   return (
-    <FlexRow>
-      <FlexRow
-        style={{
-          alignItems: "center",
-          justifyContent: "start",
-          gap: "8px",
-          userSelect: "none",
-          pointerEvents: "none",
-        }}
-      >
-        <FaBarcode style={{ fontSize: "3rem" }} />
-        <Title theme={theme} style={{ fontSize: "1.8rem" }}>
-          BARCODE
-          <span style={{ color: theme.palette.primary.main }}>PRO</span>
-        </Title>
-      </FlexRow>
+    <>
       <FlexRow>
-        <IconButton
-          onClick={handleClearBarcodeStack}
-          title="Clear All"
-          style={{ color: theme.palette.primary.main }}
+        <FlexRow
+          style={{
+            alignItems: "center",
+            justifyContent: "start",
+            gap: "8px",
+            userSelect: "none",
+            pointerEvents: "none",
+          }}
         >
-          <DeleteOutlined />
-        </IconButton>
-        <IconButton
-          onClick={() =>
-            exportSingleBarcode(barcodeValue, barcodeOptions, outputFormat)
-          }
-          title="Export Single"
-          style={{ color: theme.palette.primary.main }}
-        >
-          <ExportOutlined />
-        </IconButton>
+          <FaBarcode style={{ fontSize: "3rem" }} />
+          <Title theme={theme} style={{ fontSize: "1.8rem" }}>
+            BARCODE
+            <span style={{ color: theme.palette.primary.main }}>PRO</span>
+          </Title>
+        </FlexRow>
+        <FlexRow>
+          <IconButton
+            onClick={() => setShowModal(true)}
+            title="Clear All"
+            style={{ color: theme.palette.primary.main }}
+          >
+            <DeleteOutlined />
+          </IconButton>
+          <IconButton
+            onClick={() =>
+              exportSingleBarcode(barcodeValue, barcodeOptions, outputFormat)
+            }
+            title="Export Single"
+            style={{ color: theme.palette.primary.main }}
+          >
+            <ExportOutlined />
+          </IconButton>
+          <IconButton
+            title="Export Current Settings"
+            style={{ color: theme.palette.primary.main }}
+          >
+            <ExportSettingsOutlined />
+          </IconButton>
+          <IconButton
+            title="Import Settings"
+            style={{ color: theme.palette.primary.main }}
+          >
+            <ImportSettingsOutlined />
+          </IconButton>
+        </FlexRow>
       </FlexRow>
-    </FlexRow>
+
+      <ConfirmationModal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={handleClearStack}
+        title="Confirm Clear"
+        content="Are you sure you want to clear all barcodes from the stack?"
+      />
+    </>
   );
 };
 

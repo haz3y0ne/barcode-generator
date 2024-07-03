@@ -10,7 +10,6 @@ import { handleOptionChange } from "../../../handlers/handleOptionChange";
 const BarcodeDisplayOptions = () => {
   const { currentConfig, updateConfig } = useContext(ConfigContext);
   const { barcodeOptions, barcodeFormats } = currentConfig;
-  console.log(currentConfig.barcodeStack);
 
   return (
     <IconButton

@@ -17,6 +17,10 @@ const InnerAppContainer = styled.div`
   flex: 1;
   gap: 5px;
   width: 100%;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+  }
 `;
 
 const App = () => {
